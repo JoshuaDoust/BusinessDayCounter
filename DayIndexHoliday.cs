@@ -19,7 +19,7 @@ namespace DesignCrowd_Task
                     foundDaysInStartYear++;
 
                 if (foundDaysInStartYear < dayIndex)
-                    holidayInYear.AddDays(1);
+                    holidayInYear = holidayInYear.AddDays(1);
                 else
                     break;
             }
@@ -41,9 +41,9 @@ namespace DesignCrowd_Task
 
                 // Check that the year hasn't rolled over to next year and the holiday is in the range
                 int additionalHolidaysAfterStart = holidayInStartYear.Year == start.Year &&
-                    holidayInStartYear > start ? 1 : 0;
+                    holidayInStartYear > start && holidayInStartYear < end ? 1 : 0;
                 int additionalHolidaysBeforeEnd = holidayInEndYear.Year == end.Year &&
-                    holidayInEndYear < end ? 1 : 0;
+                    holidayInEndYear > start && holidayInEndYear < end ? 1 : 0;
 
                 int totalHolidays;
                 if (start.Year != end.Year)

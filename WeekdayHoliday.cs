@@ -18,21 +18,21 @@ namespace DesignCrowd_Task
 
                 DateTime holidayInStartYear = new DateTime(start.Year, month, day);
                 if (holidayInStartYear.DayOfWeek == DayOfWeek.Saturday)
-                    holidayInStartYear.AddDays(2);
+                    holidayInStartYear = holidayInStartYear.AddDays(2);
                 else if (holidayInStartYear.DayOfWeek == DayOfWeek.Sunday)
-                    holidayInStartYear.AddDays(1);
+                    holidayInStartYear = holidayInStartYear.AddDays(1);
 
                 DateTime holidayInEndYear = new DateTime(end.Year, month, day);
                 if (holidayInEndYear.DayOfWeek == DayOfWeek.Saturday)
-                    holidayInEndYear.AddDays(2);
+                    holidayInEndYear = holidayInEndYear.AddDays(2);
                 else if (holidayInEndYear.DayOfWeek == DayOfWeek.Sunday)
-                    holidayInEndYear.AddDays(1);
+                    holidayInEndYear = holidayInEndYear.AddDays(1);
 
                 // Check that the year hasn't rolled over to next year and the holiday is in the range
                 int additionalHolidaysAfterStart = holidayInStartYear.Year == start.Year &&
-                    holidayInStartYear > start ? 1 : 0;
-                int additionalHolidaysBeforeEnd = holidayInEndYear.Year == end.Year && 
-                    holidayInEndYear < end ? 1 : 0;
+                    holidayInStartYear > start && holidayInStartYear < end ? 1 : 0;
+                int additionalHolidaysBeforeEnd = holidayInEndYear.Year == end.Year &&
+                    holidayInEndYear > start && holidayInEndYear < end ? 1 : 0;
 
                 int totalHolidays;
                 if (start.Year != end.Year)

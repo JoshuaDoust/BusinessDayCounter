@@ -82,8 +82,8 @@ namespace DesignCrowd_Task
         {
             IList<PublicHoliday> testPublicHolidays = new List<PublicHoliday> {
                 new FixedPublicHoliday(12, 25),
-                new FixedPublicHoliday(12, 26),
-                new FixedPublicHoliday(1, 1),
+                new WeekdayHoliday(12, 26),
+                new DayIndexHoliday(1, DayOfWeek.Tuesday, 1),
             };
 
             IList<DateTime> startDates = new List<DateTime> {
