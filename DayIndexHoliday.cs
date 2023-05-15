@@ -45,7 +45,13 @@ namespace DesignCrowd_Task
                 int additionalHolidaysBeforeEnd = holidayInEndYear.Year == end.Year &&
                     holidayInEndYear < end ? 1 : 0;
 
-                return fullYearsBetween + additionalHolidaysAfterStart + additionalHolidaysBeforeEnd;
+                int totalHolidays;
+                if (start.Year != end.Year)
+                    totalHolidays = fullYearsBetween + additionalHolidaysAfterStart + additionalHolidaysBeforeEnd;
+                else
+                    totalHolidays = fullYearsBetween + additionalHolidaysAfterStart;
+
+                return totalHolidays;
             })
         {
         }
