@@ -1,1 +1,14 @@
 # BusinessDayCounter
+
+### Weekdays between two dates
+For this part, my main concern was ensuring that processing time was O(1) with respect to the interval size. In order to do this, the number of full weeks in the interval needed to be computed, each of which clearly has 5 weekdays. Then, in addition to this, the extra days excluding those needed to be counted up. The easiest way to do this was to just step through them until we get to the end date. A more efficient, though more complex solution is obviously possible, however given that this has a low upper bound on processing time and is simple and robust, I decided to stick with this approach.
+
+### Business days between two dates
+For this, the previous part could be used to do most of the work. Once we have the weekdays, we only need to go through each public holiday, check that it's actually a weekday and falls within the date range, then subtract it from the ttoal.
+
+### More holidays
+In general, what we need for this data structure is a way of getting how many holidays (in this context, holidays meaning specifically holidays on weekdays) fall within a certain date range. As such, I created an abstract class which stores only a function which takes a start and end date, and outputs the number of holidays in the interval as an integer. This is flexible enough to cover any possible rule that a holiday may have. For specific types of holidays, a new class can be created inheriting from this abstract class and implementing the holidays in interval computation function given certain parameters. Per the examples given in the task description, I implemneted three different holiday types. Fixed holidays, Weekday holidays, and Day Index holidays.
+
+- Fixed holidays - These always fall on the same day. The trick was to figure out how many of these in some interval actually fall on a weekday. There isn't an easy way of doing this without just stepping through the years, so I settled for doing that, despite the fact that it's an unbounded duration process. (Kind of, C# years technically only go from 1 to 9999, so it's not too bad).
+- Weekday holidays - We assume that the holiday will occur at some point every year, so the processing time can be limited by just calculating the number of full years between the dates and adding that many holidays. After that, we just calculate where the holiday occurs in the start and end years, and add those on to the total.
+- Day Index holidays - Like above, we assume that this occurs at some point in each calendar year. Furthermore, we assume that the day will be a weekday. Using this, we can avoid needing to step through the years, and just add the number of intervening years with any holidays that occur either after the start date in the same year, or before the end date in that year.
